@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pick Up Order - Fish Burger Essaouira</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <script src="menu-data.js"></script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .step-panel {
+            display: none;
+        }
+
+        .step-panel.active {
+            display: block;
+            animation: fadeUp 0.35s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .no-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .no-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .time-btn.selected {
+            background: #1e3a8a !important;
+            color: white !important;
+            border-color: #1e3a8a !important;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen pb-24" style="font-family:'Outfit',sans-serif;">
+
+    <!-- HEADER -->
+    <header class="bg-[#1e3a8a] text-white py-4 sticky top-0 z-40 shadow-xl">
+        <div class="max-w-2xl mx-auto px-4 flex justify-between items-center">
+            <a href="landing.html" class="flex items-center gap-3">
+                <div class="bg-red-600 w-10 h-10 rounded-full flex items-center justify-center text-lg shadow-lg">
+                    <i class="fa-solid fa-burger"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-lg tracking-wide uppercase leading-none">FishBurger</div>
+                    <div class="text-[10px] opacity-70 tracking-widest">Pick Up Order</div>
+                </div>
+            </a>
+            <div id="hdr-cart"
+                class="hidden bg-white/10 border border-white/20 px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2">
+                <i class="fa-solid fa-basket-shopping text-red-400"></i>
+                <span id="hdr-count">0</span> items
+            </div>
+        </div>
+    </header>
+
+    <!-- STEP PROGRESS BAR -->
+    <div class="bg-white border-b border-slate-100 py-4 sticky top-[64px] z-30 shadow-sm">
+        <div class="max-w-2xl mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col items-center gap-1 cursor-pointer" onclick="safeGoTo(1)">
+                    <div id="d1"
+                        class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-black border-2 border-blue-900 bg-[#1e3a8a] text-white">
+                        1</div>
+                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Location</span>
+                </div>
+                <div class="flex-1 h-0.5 bg-slate-200 mx-1"></div>
+                <div class="flex flex-col items-center gap-1 cursor-pointer" onclick="safeGoTo(2)">
+                    <div id="d2"
+                        class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-black border-2 border-slate-200 bg-slate-100 text-slate-400">
+                        2</div>
+                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Time</span>
+                </div>
+                <div class="flex-1 h-0.5 bg-slate-200 mx-1"></div>
+                <div class="flex flex-col items-center gap-1 cursor-pointer" onclick="safeGoTo(3)">
+                    <div id="d3"
+                        class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-black border-2 border-slate-200 bg-slate-100 text-slate-400">
+                        3</div>
+                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Menu</span>
+                </div>
+                <div class="flex-1 h-0.5 bg-slate-200 mx-1"></div>
+                <div class="flex flex-col items-center gap-1 cursor-pointer" onclick="safeGoTo(4)">
+                    <div id="d4"
+                        class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-black border-2 border-slate-200 bg-slate-100 text-slate-400">
+                        4</div>
+                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Confirm</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-2xl mx-auto px-4 py-8">
+
+        <!-- ═══ STEP 1: LOCATION ═══ -->
+        <div id="step-1" class="step-panel active">
+            <h2 class="text-3xl font-bold text-blue-950 mb-1 serif">Our Branch</h2>
+            <p class="text-slate-500 mb-5">Come pick up your order at our Rooftop location</p>
+
+            <div class="rounded-3xl overflow-hidden shadow-lg mb-5 h-56">
+                <iframe src="https://www.google.com/maps?q=Fishburger+Rooftop,+Essaouira&output=embed" width="100%"
+                    height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-5">
+                <div class="flex items-start gap-4">
+                    <div
+                        class="bg-blue-950 text-white w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-blue-950 text-lg">FishBurger Rooftop</div>
+                        <div class="text-slate-500 text-sm mt-0.5">Medina, Essaouira, Morocco</div>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span
+                                class="text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-3 py-1 rounded-full">
+                                Open 11:30 – 23:30
+                            </span>
+                            <span
+                                class="text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+                                <i class="fa-solid fa-phone mr-1"></i>+212 61114026
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://www.google.com/maps/place/Fishburger+Rooftop/@31.5127773,-9.7741955,17z/data=!3m1!4b1!4m6!3m5!1s0xdad9b75f58a9f0b:0x926871003d2e989a!8m2!3d31.5127728!4d-9.7716206!16s%2Fg%2F11z7cmjk30?hl=fr-FR&entry=ttu&g_ep=EgoyMDI2MDYyNC4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    class="mt-4 flex items-center justify-center gap-2 w-full py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-blue-700 hover:bg-blue-50 transition-all">
+                    <i class="fa-brands fa-google text-red-500"></i> Open in Google Maps
+                </a>
+            </div>
+
+            <button onclick="showStep(2)"
+                class="w-full bg-[#1e3a8a] text-white font-black py-4 rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-blue-900 transition-all">
+                Choose Pick-Up Time <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- ═══ STEP 2: TIME ═══ -->
+        <div id="step-2" class="step-panel">
+            <h2 class="text-3xl font-bold text-blue-950 mb-1 serif">Pick-Up Time</h2>
+            <p class="text-slate-500 mb-5">When will you come to collect?</p>
+
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-4">
+                <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-2">Select Date</div>
+                <input type="date" id="pickup-date"
+                    class="w-full rounded-xl border border-slate-200 py-3 px-4 text-slate-800 font-semibold bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-5">
+                <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-3">Select Time</div>
+                <input type="time" id="pickup-time" onchange="pickCustomTime(this.value)"
+                    class="w-full rounded-xl border border-slate-200 py-3 px-4 text-slate-800 font-semibold bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p id="time-err" class="text-red-500 text-xs font-bold mt-3 hidden">Please select a time.</p>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="showStep(1)"
+                    class="flex-1 bg-slate-200 text-slate-700 font-black py-4 rounded-xl hover:bg-slate-300 transition-all">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>Back
+                </button>
+                <button onclick="goToMenu()"
+                    class="flex-[2] bg-[#1e3a8a] text-white font-black py-4 rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-blue-900 transition-all">
+                    Browse Menu <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ═══ STEP 3: MENU ═══ -->
+        <div id="step-3" class="step-panel">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-blue-950 mb-1 serif">Menu</h2>
+                    <p id="menu-time-label" class="text-slate-500 text-sm"></p>
+                </div>
+                <div id="cart-pill"
+                    class="hidden bg-blue-950 text-white px-3 py-2 rounded-full text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-basket-shopping text-orange-400"></i><span id="cart-pill-n">0</span>
+                </div>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="flex gap-2 mb-4 overflow-x-auto pb-1 no-scroll">
+                <button id="tab-burgers" onclick="switchTab('burgers',this)"
+                    class="px-4 py-2 rounded-full font-bold text-sm border whitespace-nowrap bg-blue-950 text-white border-blue-950 shrink-0">Burgers</button>
+                <button id="tab-sides" onclick="switchTab('sides',this)"
+                    class="px-4 py-2 rounded-full font-bold text-sm border whitespace-nowrap bg-white text-slate-600 border-slate-300 shrink-0">Sides</button>
+                <button id="tab-tapas" onclick="switchTab('tapas',this)"
+                    class="px-4 py-2 rounded-full font-bold text-sm border whitespace-nowrap bg-white text-slate-600 border-slate-300 shrink-0">Tapas</button>
+                <button id="tab-globe" onclick="switchTab('globe',this)"
+                    class="px-4 py-2 rounded-full font-bold text-sm border whitespace-nowrap bg-white text-slate-600 border-slate-300 shrink-0">Global</button>
+                <button id="tab-desserts" onclick="switchTab('desserts',this)"
+                    class="px-4 py-2 rounded-full font-bold text-sm border whitespace-nowrap bg-white text-slate-600 border-slate-300 shrink-0">Desserts</button>
+                <button id="tab-drinks" onclick="switchTab('drinks',this)"
+                    class="px-4 py-2 rounded-full font-bold text-sm border whitespace-nowrap bg-white text-slate-600 border-slate-300 shrink-0">Drinks</button>
+            </div>
+
+            <div id="menu-list" class="space-y-3 mb-5"></div>
+
+            <div class="flex gap-3">
+                <button onclick="showStep(2)"
+                    class="flex-1 bg-slate-200 text-slate-700 font-black py-4 rounded-xl hover:bg-slate-300 transition-all">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>Back
+                </button>
+                <button onclick="goToConfirm()"
+                    class="flex-[2] bg-green-600 text-white font-black py-4 rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-green-700 transition-all">
+                    Review Order <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ═══ STEP 4: CONFIRM ═══ -->
+        <div id="step-4" class="step-panel">
+            <h2 class="text-3xl font-bold text-blue-950 mb-1 serif">Confirm</h2>
+            <p class="text-slate-500 mb-5">Review your order below</p>
+
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-4">
+                <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Order Summary</div>
+                <div id="confirm-list" class="space-y-2 mb-4"></div>
+                <div class="border-t border-slate-100 pt-4 flex justify-between items-center">
+                    <span class="text-slate-500 font-bold text-sm uppercase">Total</span>
+                    <span id="confirm-total" class="text-3xl font-black text-blue-950">0 DH</span>
+                </div>
+                <div class="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-3 flex items-center gap-3">
+                    <i class="fa-solid fa-clock text-blue-600 text-lg"></i>
+                    <div>
+                        <div class="text-[10px] font-black text-blue-700 uppercase tracking-wider">Pick-Up</div>
+                        <div id="confirm-time" class="font-bold text-blue-950 text-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-5">
+                <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Your Details</div>
+                <div class="space-y-3">
+                    <div>
+                        <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-1.5">Full Name
+                        </div>
+                        <input type="text" id="cust-name" placeholder="Full Name"
+                            class="w-full rounded-xl border border-slate-200 py-3 px-4 text-sm font-semibold bg-slate-50 focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder:text-slate-300">
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-1.5">Phone</div>
+                        <input type="tel" id="cust-phone" placeholder="Phone Number"
+                            class="w-full rounded-xl border border-slate-200 py-3 px-4 text-sm font-semibold bg-slate-50 focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder:text-slate-300">
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-2">Payment</div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="pay" value="cash" checked class="hidden peer">
+                                <div
+                                    class="peer-checked:bg-orange-50 peer-checked:border-orange-400 bg-slate-50 border border-slate-200 rounded-xl py-3 flex items-center justify-center gap-2 font-semibold text-sm text-slate-600 peer-checked:text-orange-700 transition-all">
+                                    <i class="fa-solid fa-money-bill"></i> Cash
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="pay" value="card" class="hidden peer">
+                                <div
+                                    class="peer-checked:bg-orange-50 peer-checked:border-orange-400 bg-slate-50 border border-slate-200 rounded-xl py-3 flex items-center justify-center gap-2 font-semibold text-sm text-slate-600 peer-checked:text-orange-700 transition-all">
+                                    <i class="fa-solid fa-credit-card"></i> Card
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="showStep(3)"
+                    class="flex-1 bg-slate-200 text-slate-700 font-black py-4 rounded-xl hover:bg-slate-300 transition-all">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>Back
+                </button>
+                <button onclick="placeOrder()"
+                    class="flex-[2] bg-green-600 text-white font-black py-4 rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-green-700 transition-all">
+                    <i class="fa-solid fa-check"></i> Confirm Pick-Up
+                </button>
+            </div>
+        </div>
+
+    </div><!-- end main -->
+
+    <!-- SUCCESS MODAL -->
+    <div id="ok-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-gray-900/70 backdrop-blur-sm">
+        <div
+            class="w-full max-w-md bg-gradient-to-br from-green-600 to-emerald-700 rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
+            <div class="p-8 text-center">
+                <div
+                    class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-white/30">
+                    <i class="fa-solid fa-check text-4xl text-white"></i>
+                </div>
+                <div class="text-sm text-white/60 mb-1 uppercase tracking-wider">Order <span id="ok-num">#0000</span>
+                </div>
+                <h3 class="text-3xl font-black text-white serif mb-5">Pick-Up Confirmed!</h3>
+                <div id="ok-details"
+                    class="bg-white/10 rounded-2xl p-4 mb-5 text-left space-y-2 text-sm text-white/90 border border-white/20">
+                </div>
+                <a id="ok-wa" href="#" target="_blank"
+                    class="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-[#25D366] text-white font-black mb-3 hover:bg-[#22c35e] transition-all">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Send to Kitchen
+                </a>
+                <button
+                    onclick="document.getElementById('ok-modal').style.display='none'; window.location.href='landing.html';"
+                    class="w-full py-3 rounded-xl bg-white/20 text-white text-sm font-bold border border-white/30 hover:bg-white/30 transition-all">
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Selection Modal -->
+    <div id="side-selection-modal" class="fixed inset-0 z-[120] hidden" aria-labelledby="side-selection-title"
+        role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity" aria-hidden="true"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <div
+                    class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-slate-200">
+                    <div class="px-6 pb-6 pt-8 sm:p-8 text-center">
+                        <div
+                            class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-orange-100 mb-6 border-4 border-orange-200 shadow-inner">
+                            <i class="fa-solid fa-bowl-food text-3xl text-orange-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-black leading-tight text-slate-800 font-serif mb-2"
+                            id="side-selection-title">
+                            Choose Your Free Side
+                        </h3>
+                        <p class="text-sm text-slate-500 font-medium mb-6">Every burger comes with a free side. Pick
+                            one!</p>
+                        <div id="side-options" class="grid grid-cols-2 gap-3 mb-6"></div>
+                        <button type="button" onclick="closeSideModal()"
+                            class="w-full justify-center rounded-xl bg-slate-200 text-slate-700 px-6 py-3 text-sm font-bold hover:bg-slate-300 transition-all active:scale-95 uppercase tracking-widest">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── Data & State ─────────────────────────────────────────────────────────────
+        var MENU = window.menuData ? window.menuData.essaouira : {};
+        var cart = [];
+        var chosenDate = '';
+        var chosenTime = '';
+        var currentStep = 1;
+
+        // ── On Load ───────────────────────────────────────────────────────────────────
+        window.onload = function () {
+            localStorage.setItem('seenLanding', 'true');
+            localStorage.setItem('selectedLocation', 'rooftop');
+
+            var today = new Date();
+            var yyyy = today.getFullYear();
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var dd = String(today.getDate()).padStart(2, '0');
+            var todayStr = yyyy + '-' + mm + '-' + dd;
+
+            var el = document.getElementById('pickup-date');
+            el.min = todayStr;
+            el.value = todayStr;
+
+            renderMenu('burgers');
+        };
+
+        // ── Step Helpers ──────────────────────────────────────────────────────────────
+        function showStep(n) {
+            // Hide all panels
+            for (var i = 1; i <= 4; i++) {
+                document.getElementById('step-' + i).classList.remove('active');
+                var dot = document.getElementById('d' + i);
+                dot.style.background = '';
+                dot.style.color = '';
+                dot.style.borderColor = '';
+                dot.innerHTML = i;
+            }
+
+            // Mark previous as done (green check)
+            for (var j = 1; j < n; j++) {
+                var d = document.getElementById('d' + j);
+                d.style.background = '#16a34a';
+                d.style.color = 'white';
+                d.style.borderColor = '#16a34a';
+                d.innerHTML = '<i class="fa-solid fa-check" style="font-size:11px"></i>';
+            }
+
+            // Mark current as active (blue)
+            var cur = document.getElementById('d' + n);
+            cur.style.background = '#1e3a8a';
+            cur.style.color = 'white';
+            cur.style.borderColor = '#1e3a8a';
+            cur.innerHTML = n;
+
+            document.getElementById('step-' + n).classList.add('active');
+            currentStep = n;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Only allow going back (safe to skip validation)
+        function safeGoTo(n) {
+            if (n < currentStep) showStep(n);
+        }
+
+        // ── Time Slots ────────────────────────────────────────────────────────────────
+        document.getElementById('pickup-date').addEventListener('change', function () {
+            chosenTime = '';
+            document.getElementById('pickup-time').value = '';
+        });
+
+        function pickCustomTime(val) {
+            chosenTime = val;
+            chosenDate = document.getElementById('pickup-date').value;
+            document.getElementById('time-err').classList.add('hidden');
+        }
+
+        function goToMenu() {
+            if (!chosenTime) {
+                document.getElementById('time-err').classList.remove('hidden');
+                return;
+            }
+            var d = new Date(chosenDate + 'T12:00:00');
+            var opts = { weekday: 'long', month: 'long', day: 'numeric' };
+            document.getElementById('menu-time-label').textContent = 'Collecting ' + d.toLocaleDateString('en-US', opts) + ' at ' + chosenTime;
+            showStep(3);
+        }
+
+        // ── Menu ──────────────────────────────────────────────────────────────────────
+        function switchTab(cat, btn) {
+            document.querySelectorAll('[id^="tab-"]').forEach(function (b) {
+                b.classList.remove('bg-blue-950', 'text-white', 'border-blue-950');
+                b.classList.add('bg-white', 'text-slate-600', 'border-slate-300');
+            });
+            btn.classList.add('bg-blue-950', 'text-white', 'border-blue-950');
+            btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-300');
+            renderMenu(cat);
+        }
+
+        function renderMenu(cat) {
+            var items = MENU[cat] || [];
+            var el = document.getElementById('menu-list');
+            if (!items.length) { el.innerHTML = '<p class="text-center text-slate-400 py-8 text-sm">Nothing here yet.</p>'; return; }
+
+            el.innerHTML = items.map(function (item, idx) {
+                var priceNum = parseFloat((item.price || '0').toString().replace(/[^0-9.]/g, '')) || 0;
+                var miniPriceNum = item.mini ? (parseFloat((item.mini || '0').toString().replace(/[^0-9.]/g, '')) || 0) : 0;
+                
+                var imgHtml = item.image
+                    ? '<img src="' + item.image + '" alt="' + item.name + '" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 border border-slate-100">'
+                    : '<div class="w-16 h-16 rounded-xl bg-blue-950/10 flex items-center justify-center flex-shrink-0 text-2xl">🐟</div>';
+
+                var actionHtml = item.mini
+                    ? '<div class="flex flex-col gap-2 items-end mt-1">'
+                      + '<div class="flex items-center gap-2"><span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Norm</span><span class="font-black text-blue-950 text-sm w-12 text-right">' + item.price + '</span><button onclick="addItem(\'' + escQ(item.name) + '\',' + priceNum + ',\'' + escQ(item.price) + '\')" class="bg-blue-950 text-white w-7 h-7 rounded-full flex items-center justify-center hover:bg-blue-800 active:scale-90 transition shadow"><i class="fa-solid fa-plus text-[10px]"></i></button></div>'
+                      + '<div class="flex items-center gap-2"><span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Mini</span><span class="font-black text-blue-600 text-sm w-12 text-right">' + item.mini + '</span><button onclick="addItem(\'' + escQ(item.name) + ' (Mini)\',' + miniPriceNum + ',\'' + escQ(item.mini) + '\')" class="bg-blue-100 text-blue-700 w-7 h-7 rounded-full flex items-center justify-center hover:bg-blue-200 active:scale-90 transition shadow-sm"><i class="fa-solid fa-plus text-[10px]"></i></button></div>'
+                      + '</div>'
+                    : '<span class="font-black text-blue-950 text-sm whitespace-nowrap">' + (item.price || '') + '</span>'
+                      + '<button onclick="addItem(\'' + escQ(item.name) + '\',' + priceNum + ',\'' + escQ(item.price) + '\')"'
+                      + ' class="bg-blue-950 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-800 active:scale-90 transition-all shadow">'
+                      + '<i class="fa-solid fa-plus text-xs"></i></button>';
+
+                return '<div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 flex items-center gap-4">'
+                    + imgHtml
+                    + '<div class="flex-1 min-w-0">'
+                    + '<div class="font-bold text-blue-950 text-sm leading-tight">' + (item.name || '') + '</div>'
+                    + (item.desc ? '<div class="text-xs text-slate-500 mt-0.5 line-clamp-2">' + item.desc + '</div>' : '')
+                    + (item.note ? '<div class="text-[10px] text-orange-500 font-semibold mt-1">' + item.note + '</div>' : '')
+                    + '</div>'
+                    + '<div class="flex flex-col items-end justify-center gap-2 flex-shrink-0">'
+                    + actionHtml
+                    + '</div></div>';
+            }).join('');
+        }
+
+        function escQ(s) { return (s || '').replace(/'/g, "\\'"); }
+
+        let pendingBurger = null;
+        const availableSides = [
+            { name: "Potato Fries", icon: `<svg viewBox="0 0 24 24" fill="none" stroke="none" class="w-6 h-6 text-slate-400 group-hover:text-orange-500 transition-colors"><defs><mask id="fries-mask"><rect x="0" y="0" width="24" height="24" fill="white" /><path d="M 2 9.5 Q 12 13 22 9.5 L 22 24 L 2 24 Z" fill="black" /></mask></defs><g mask="url(#fries-mask)" fill="currentColor"><rect x="4" y="4.5" width="1.6" height="8" rx="0.3" transform="rotate(-10 4.8 8.5)" /><rect x="6" y="3.5" width="1.6" height="9" rx="0.3" transform="rotate(-6 6.8 8)" /><rect x="8.2" y="4" width="1.6" height="9.5" rx="0.3" transform="rotate(-3 9 8.7)" /><rect x="10.2" y="1" width="1.6" height="11" rx="0.3" /><rect x="12.2" y="2.5" width="1.6" height="10" rx="0.3" /><rect x="14.2" y="1.5" width="1.6" height="11" rx="0.3" /><rect x="16.2" y="3.5" width="1.6" height="9" rx="0.3" transform="rotate(4 17 8)" /><rect x="18.2" y="3" width="1.6" height="9" rx="0.3" transform="rotate(8 19 7.5)" /></g><path d="M 5.2 11 L 6.8 21.5 L 17.2 21.5 L 18.8 11 Q 12 14.5 5.2 11 Z" fill="currentColor" /></svg>` },
+            { name: "Onion Rings", icon: "fa-ring" },
+            { name: "Guacamole", icon: `<svg viewBox="0 0 24 24" class="w-6 h-6 text-slate-400 group-hover:text-orange-500 transition-colors" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="2" y="11" width="20" height="2" rx="1" /><path d="M 4 13 C 4 17.5 7 19.5 12 19.5 C 17 19.5 20 17.5 20 13" /><path d="M 4.5 15.5 C 8 16.5 16 16.5 19.5 15.5" /><path d="M 6.5 9.5 L 4.5 4.5 L 9 8" /><circle cx="6" cy="6" r="0.6" fill="currentColor" stroke="none" /><circle cx="7.5" cy="7.5" r="0.6" fill="currentColor" stroke="none" /><path d="M 9.5 8.5 L 11.5 3.5 L 13.5 8.5" /><path d="M 14.5 8.5 L 18.5 5.5 L 17.5 10" /><circle cx="16.5" cy="7.5" r="0.6" fill="currentColor" stroke="none" /><path d="M 4 11 C 3.5 9.5 6 8.5 8 9.5 C 9.5 8 14.5 8 16 9.5 C 18 8.5 20.5 9.5 20 11" /><circle cx="10" cy="10" r="0.4" fill="currentColor" stroke="none" /><circle cx="14" cy="10.5" r="0.4" fill="currentColor" stroke="none" /></svg>` },
+            { name: "Coleslaw", icon: "fa-bowl-rice" }
+        ];
+
+        function isBurgerItem(name) {
+            const burgerNames = (MENU.burgers || []).map(function(b) { return b.name.toLowerCase(); });
+            const itemNameLower = name.toLowerCase().replace(' (mini)', '');
+            return burgerNames.some(function(b) { return itemNameLower.includes(b) || b.includes(itemNameLower); }) || name.toLowerCase().includes('burger');
+        }
+
+        function addItem(name, priceNum, priceStr) {
+            if (isBurgerItem(name)) {
+                pendingBurger = { name: name, price: priceNum, priceStr: priceStr || priceNum + ' DH' };
+                showSideSelectionModal();
+            } else {
+                cart.push({ name: name, price: priceNum, priceStr: priceStr || priceNum + ' DH' });
+                updateCartUI();
+            }
+        }
+
+        function showSideSelectionModal() {
+            const container = document.getElementById('side-options');
+            container.innerHTML = '';
+            availableSides.forEach(function(side) {
+                const btn = document.createElement('button');
+                btn.className = 'flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:border-orange-500 hover:bg-orange-50 transition-all active:scale-95 group';
+                let iconHtml = side.icon.startsWith('<svg') ? side.icon : `<i class="fa-solid ${side.icon} text-2xl text-slate-400 group-hover:text-orange-500 transition-colors"></i>`;
+                btn.innerHTML = iconHtml + '<span class="text-sm font-bold text-slate-700 group-hover:text-orange-700">' + side.name + '</span><span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">FREE</span>';
+                btn.onclick = function() { selectSide(side.name); };
+                container.appendChild(btn);
+            });
+            document.getElementById('side-selection-modal').classList.remove('hidden');
+        }
+
+        function selectSide(sideName) {
+            if (pendingBurger) {
+                cart.push(pendingBurger);
+                cart.push({ name: sideName + " (Free with " + pendingBurger.name + ")", price: 0, priceStr: "FREE" });
+                pendingBurger = null;
+                updateCartUI();
+            }
+            closeSideModal();
+        }
+
+        function closeSideModal() {
+            document.getElementById('side-selection-modal').classList.add('hidden');
+            pendingBurger = null;
+        }
+
+        function updateCartUI() {
+            var n = cart.length;
+            var hc = document.getElementById('hdr-cart');
+            var cp = document.getElementById('cart-pill');
+            document.getElementById('hdr-count').textContent = n;
+            document.getElementById('cart-pill-n').textContent = n;
+            if (n > 0) {
+                hc.classList.remove('hidden'); hc.classList.add('flex');
+                cp.classList.remove('hidden'); cp.classList.add('flex');
+            } else {
+                hc.classList.add('hidden'); hc.classList.remove('flex');
+                cp.classList.add('hidden'); cp.classList.remove('flex');
+            }
+        }
+
+        function goToConfirm() {
+            if (cart.length === 0) { alert('Please add at least one item.'); return; }
+
+            var list = document.getElementById('confirm-list');
+            var total = cart.reduce(function (s, i) { return s + i.price; }, 0);
+
+            list.innerHTML = cart.map(function (item, idx) {
+                return '<div class="flex items-center justify-between gap-2">'
+                    + '<div class="flex items-center gap-2">'
+                    + '<button onclick="removeItem(' + idx + ')" class="w-5 h-5 bg-red-100 text-red-500 rounded-full text-xs flex items-center justify-center hover:bg-red-200 flex-shrink-0">'
+                    + '<i class="fa-solid fa-minus" style="font-size:8px"></i></button>'
+                    + '<span class="text-sm font-semibold text-slate-700">' + item.name + '</span></div>'
+                    + '<span class="text-sm font-bold text-blue-950 whitespace-nowrap">' + item.priceStr + '</span></div>';
+            }).join('');
+
+            document.getElementById('confirm-total').textContent = total + ' DH';
+
+            var d = new Date(chosenDate + 'T12:00:00');
+            var opts = { weekday: 'long', month: 'long', day: 'numeric' };
+            document.getElementById('confirm-time').textContent = d.toLocaleDateString('en-US', opts) + ' at ' + chosenTime;
+
+            showStep(4);
+        }
+
+        function removeItem(idx) {
+            cart.splice(idx, 1);
+            updateCartUI();
+            if (cart.length > 0) goToConfirm(); else showStep(3);
+        }
+
+        // ── Place Order ───────────────────────────────────────────────────────────────
+        function placeOrder() {
+            var name = document.getElementById('cust-name').value.trim();
+            var phone = document.getElementById('cust-phone').value.trim();
+            var pay = document.querySelector('input[name="pay"]:checked').value;
+
+            if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+            var total = cart.reduce(function (s, i) { return s + i.price; }, 0);
+            var num = Math.floor(Math.random() * 9000 + 1000);
+            var items = cart.map(function (i) { return '• ' + i.name + ' — ' + i.priceStr; }).join('\n');
+            var waMsg = encodeURIComponent(
+                '🐟 *PICK-UP #' + num + '*\n\n'
+                + '👤 *Name:* ' + name + '\n📞 *Phone:* ' + phone + '\n\n'
+                + '📋 *Items:*\n' + items + '\n\n'
+                + '💰 *Total:* ' + total + ' DH\n💳 *Payment:* ' + pay + '\n'
+                + '📅 *Pick-Up:* ' + chosenDate + ' at ' + chosenTime + '\n'
+                + '🏢 *Branch:* Rooftop'
+            );
+
+            // Show success modal
+            document.getElementById('ok-num').textContent = '#' + num;
+            document.getElementById('ok-wa').href = 'https://wa.me/212600000000?text=' + waMsg;
+            document.getElementById('ok-details').innerHTML =
+                '<div><b>Name:</b> ' + name + '</div>'
+                + '<div><b>Phone:</b> ' + phone + '</div>'
+                + '<div><b>Items:</b> ' + cart.length + ' item(s)</div>'
+                + '<div><b>Pick-Up:</b> ' + chosenDate + ' at ' + chosenTime + '</div>'
+                + '<div><b>Total:</b> ' + total + ' DH</div>';
+
+            var modal = document.getElementById('ok-modal');
+            modal.style.display = 'flex';
+
+            // Try Firebase in background (non-blocking)
+            try {
+                if (window._submitPickup) window._submitPickup({
+                    type: 'pickup', customer: { name: name, phone: phone },
+                    items: cart.map(function (i) { return { name: i.name, price: i.price }; }),
+                    total: total, pickupDate: chosenDate, pickupTime: chosenTime,
+                    location: 'rooftop', paymentMethod: pay, status: 'pending',
+                    orderNumber: num, createdAt: new Date().toISOString()
+                });
+            } catch (e) { }
+        }
+
+        function pad(n) { return String(n).padStart(2, '0'); }
+    </script>
+
+    <!-- Firebase (non-blocking) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        const app = initializeApp({
+            apiKey: "AIzaSyAbkJpVWRXfOuG-VDp0dC0oGkPKo9VCZD0",
+            authDomain: "fishburger-system.firebaseapp.com",
+            projectId: "fishburger-system",
+            storageBucket: "fishburger-system.firebasestorage.app",
+            messagingSenderId: "1011829893886",
+            appId: "1:1011829893886:web:626820e2eb475b2b45d3af"
+        }, "pickup");
+        const db = getFirestore(app);
+        window._submitPickup = async function (data) {
+            await addDoc(collection(db, 'orders'), data);
+        };
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fishburger - Stock & Inventory Management</title>
+
+    <!-- Premium Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons and CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            primary: '#FF4500',
+                            secondary: '#1e3a8a',
+                            dark: '#0f172a',
+                            light: '#f8fafc',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FF4500 0%, #ff8c00 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 69, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* Toggle Switch Styling */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .3s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #FF4500;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+
+<body class="bg-[#0b0f19] text-slate-200 font-sans custom-scrollbar">
+    <!-- Sidebar -->
+    <div
+        class="fixed left-0 top-0 h-full w-20 md:w-64 bg-[#0f172a] border-r border-slate-800 z-50 flex flex-col items-center py-8">
+        <div class="mb-12">
+            <div
+                class="bg-brand-primary w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg shadow-brand-primary/20">
+                <i class="fa-solid fa-fish text-2xl text-white"></i>
+            </div>
+        </div>
+
+        <nav class="flex-1 space-y-4 px-4 w-full">
+            <a href="backoffice.html"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-800/30 text-slate-400 hover:text-white transition-all group">
+                <i class="fa-solid fa-chart-line text-lg w-6 flex justify-center"></i>
+                <span class="hidden md:block font-semibold">Dashboard</span>
+            </a>
+            <a href="stock.html"
+                class="flex items-center gap-4 p-3 rounded-xl bg-slate-800/50 text-brand-primary border border-brand-primary/30 transition-all group">
+                <i class="fa-solid fa-boxes-stacked text-lg w-6 flex justify-center"></i>
+                <span class="hidden md:block font-semibold">Stock Management</span>
+            </a>
+            <a href="kitchen-firebase.html"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-800/30 text-slate-400 hover:text-white transition-all group">
+                <i class="fa-solid fa-fire-burner text-lg w-6 flex justify-center"></i>
+                <span class="hidden md:block font-medium">Kitchen</span>
+            </a>
+            <a href="delivery-firebase.html"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-800/30 text-slate-400 hover:text-white transition-all group">
+                <i class="fa-solid fa-truck-fast text-lg w-6 flex justify-center"></i>
+                <span class="hidden md:block font-medium">Delivery</span>
+            </a>
+            <a href="index.html"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-800/30 text-slate-400 hover:text-white transition-all group">
+                <i class="fa-solid fa-house text-lg w-6 flex justify-center"></i>
+                <span class="hidden md:block font-medium">Home Page</span>
+            </a>
+        </nav>
+
+        <div class="mt-auto px-4 w-full">
+            <a href="index.html"
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition-all w-full">
+                <i class="fa-solid fa-right-from-bracket text-lg w-6 flex justify-center"></i>
+                <span class="hidden md:block font-medium">Sign Out</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="ml-20 md:ml-64 p-4 md:p-8 min-h-screen">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 animate-fade-in"
+            style="animation-delay: 0.1s">
+            <div>
+                <h1 class="text-3xl font-bold text-white mb-2">Stock & Inventory</h1>
+                <p class="text-slate-400">Manage real-time availability and pricing of your menu items.</p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="openAddModal()"
+                    class="bg-brand-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 shadow-lg shadow-brand-primary/20 transition-all active:scale-95">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    Add Menu Item
+                </button>
+                <div class="flex items-center gap-4 bg-slate-800/50 p-2 rounded-2xl border border-slate-700/50 text-sm font-medium">
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 text-green-400 rounded-xl border border-green-500/20">
+                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                        Live Stock
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filters and Search Toolbar -->
+        <div class="glass-card rounded-3xl p-6 mb-8 animate-fade-in flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center"
+            style="animation-delay: 0.2s">
+            
+            <!-- Search & Category Filters -->
+            <div class="flex flex-col sm:flex-row gap-3 flex-1">
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                    <input type="text" id="search-input" oninput="handleSearch()"
+                        placeholder="Search menu items..."
+                        class="w-full bg-[#131b2e] border border-slate-800 rounded-2xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-primary transition-all">
+                </div>
+                <select id="category-filter" onchange="handleCategoryFilter()"
+                    class="bg-[#131b2e] border border-slate-800 rounded-2xl px-4 py-3 text-sm text-slate-300 focus:outline-none focus:border-brand-primary transition-all cursor-pointer">
+                    <option value="all">All Categories</option>
+                    <option value="burgers">Burgers</option>
+                    <option value="sides">Sides</option>
+                    <option value="tapas">Tapas</option>
+                    <option value="globe">Taste the Globe</option>
+                    <option value="desserts">Desserts</option>
+                    <option value="drinks">Drinks</option>
+                </select>
+            </div>
+
+            <!-- Sorting & Ordination -->
+            <div class="flex flex-col sm:flex-row gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap">Sort By:</span>
+                    <select id="sort-select" onchange="handleSort()"
+                        class="bg-[#131b2e] border border-slate-800 rounded-2xl px-4 py-3 text-sm text-slate-300 focus:outline-none focus:border-brand-primary transition-all cursor-pointer">
+                        <option value="name-asc">Name: A to Z</option>
+                        <option value="name-desc">Name: Z to A</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="category">Category</option>
+                        <option value="stock-medina">Medina Stock</option>
+                        <option value="stock-rooftop">Rooftop Stock</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory List Card -->
+        <div class="glass-card rounded-3xl overflow-hidden animate-fade-in" style="animation-delay: 0.3s">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-white">Menu Stock List</h3>
+                <span id="items-count" class="text-xs font-bold text-slate-400 bg-slate-800 px-3 py-1.5 rounded-full">0 Items</span>
+            </div>
+
+            <!-- Table Container -->
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-800 bg-[#0f172a]/30">
+                            <th class="py-4 px-6">Item details</th>
+                            <th class="py-4 px-6">Category</th>
+                            <th class="py-4 px-6">Pricing</th>
+                            <th class="py-4 px-6 text-center">Global Stock</th>
+                            <th class="py-4 px-6 text-center text-green-400 bg-green-500/5">Medina Stock</th>
+                            <th class="py-4 px-6 text-center text-purple-400 bg-purple-500/5">Rooftop Stock</th>
+                            <th class="py-4 px-6 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-table-body" class="divide-y divide-slate-800/40">
+                        <!-- Dynamic items will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="text-center py-20 hidden">
+                <div class="max-w-md mx-auto">
+                    <div class="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-700/50">
+                        <i class="fa-solid fa-boxes-stacked text-2xl text-slate-500"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-1">No items found</h4>
+                    <p class="text-slate-500 text-sm">No menu items match your search or filter criteria.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Item Modal -->
+    <div id="add-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-[#0b0f19]/80 backdrop-blur-sm" onclick="closeAddModal()"></div>
+        <!-- Content -->
+        <div class="relative w-full max-w-lg bg-[#0f172a] border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in">
+            <h3 class="text-2xl font-bold text-white mb-6">Add New Menu Item</h3>
+            <form id="add-form" onsubmit="handleAddSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Item Name</label>
+                        <input type="text" id="add-name" required
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-brand-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Base Price (DH)</label>
+                        <input type="number" id="add-price" required min="0" step="any"
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-brand-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mini Price (Optional)</label>
+                        <input type="number" id="add-mini" min="0" step="any"
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-brand-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Category</label>
+                        <select id="add-category" required
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-slate-300 focus:outline-none focus:border-brand-primary">
+                            <option value="burgers">Burgers</option>
+                            <option value="sides">Sides</option>
+                            <option value="tapas">Tapas</option>
+                            <option value="globe">Taste the Globe</option>
+                            <option value="desserts">Desserts</option>
+                            <option value="drinks">Drinks</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Branch / Location</label>
+                        <select id="add-location" required
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-slate-300 focus:outline-none focus:border-brand-primary">
+                            <option value="all">All Branches</option>
+                            <option value="essaouira">Essaouira</option>
+                            <option value="medina">Medina Only</option>
+                            <option value="rooftop">Rooftop Only</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Description</label>
+                        <textarea id="add-desc" rows="3"
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-brand-primary"></textarea>
+                    </div>
+                </div>
+                <div class="flex gap-3 justify-end pt-4">
+                    <button type="button" onclick="closeAddModal()"
+                        class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all active:scale-95">Cancel</button>
+                    <button type="submit"
+                        class="bg-brand-primary hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all active:scale-95">Save Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Item Modal -->
+    <div id="edit-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-[#0b0f19]/80 backdrop-blur-sm" onclick="closeEditModal()"></div>
+        <!-- Content -->
+        <div class="relative w-full max-w-lg bg-[#0f172a] border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl animate-fade-in">
+            <h3 class="text-2xl font-bold text-white mb-6">Edit Menu Item</h3>
+            <form id="edit-form" onsubmit="handleEditSubmit(event)" class="space-y-4">
+                <input type="hidden" id="edit-id">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Item Name</label>
+                        <input type="text" id="edit-name" required
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-brand-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Base Price (DH)</label>
+                        <input type="number" id="edit-price" required min="0" step="any"
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-brand-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mini Price (Optional)</label>
+                        <input type="number" id="edit-mini" min="0" step="any"
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-brand-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Category</label>
+                        <select id="edit-category" required
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-slate-300 focus:outline-none focus:border-brand-primary">
+                            <option value="burgers">Burgers</option>
+                            <option value="sides">Sides</option>
+                            <option value="tapas">Tapas</option>
+                            <option value="globe">Taste the Globe</option>
+                            <option value="desserts">Desserts</option>
+                            <option value="drinks">Drinks</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Branch / Location</label>
+                        <select id="edit-location" required
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-slate-300 focus:outline-none focus:border-brand-primary">
+                            <option value="all">All Branches</option>
+                            <option value="essaouira">Essaouira</option>
+                            <option value="medina">Medina Only</option>
+                            <option value="rooftop">Rooftop Only</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Description</label>
+                        <textarea id="edit-desc" rows="3"
+                            class="w-full bg-[#131b2e] border border-slate-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-brand-primary"></textarea>
+                    </div>
+                </div>
+                <div class="flex gap-3 justify-end pt-4">
+                    <button type="button" onclick="closeEditModal()"
+                        class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all active:scale-95">Cancel</button>
+                    <button type="submit"
+                        class="bg-brand-primary hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all active:scale-95">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Operations Module -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firestore configuration for menu database
+        const menuConfig = {
+            apiKey: "AIzaSyDH78fxDaNoqGAzyuPvuGMAoI09xlm8G_8",
+            authDomain: "schedulesfishburger.firebaseapp.com",
+            projectId: "schedulesfishburger",
+            storageBucket: "schedulesfishburger.firebasestorage.app",
+            messagingSenderId: "90025578074",
+            appId: "1:90025578074:web:a23dc45d6b4d1e2b0b5263",
+            measurementId: "G-02T4XQD19G"
+        };
+
+        const app = initializeApp(menuConfig);
+        const db = getFirestore(app);
+
+        let menuItems = [];
+        let filteredItems = [];
+
+        // Realtime Subscription
+        function startSync() {
+            onSnapshot(collection(db, 'menu'), (snapshot) => {
+                menuItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                applyFiltersAndRender();
+            }, (error) => {
+                console.error("Firestore sync error:", error);
+            });
+        }
+
+        // Apply filters, searches, and sort
+        window.applyFiltersAndRender = function() {
+            const search = (document.getElementById('search-input').value || '').toLowerCase().trim();
+            const category = document.getElementById('category-filter').value;
+            const sort = document.getElementById('sort-select').value;
+
+            // Filter
+            filteredItems = menuItems.filter(item => {
+                const matchesSearch = (item.name || '').toLowerCase().includes(search);
+                const matchesCategory = category === 'all' || item.category === category;
+                return matchesSearch && matchesCategory;
+            });
+
+            // Sort
+            filteredItems.sort((a, b) => {
+                if (sort === 'name-asc') return (a.name || '').localeCompare(b.name || '');
+                if (sort === 'name-desc') return (b.name || '').localeCompare(a.name || '');
+                if (sort === 'price-asc') {
+                    const priceA = parseFloat(a.price) || 0;
+                    const priceB = parseFloat(b.price) || 0;
+                    return priceA - priceB;
+                }
+                if (sort === 'price-desc') {
+                    const priceA = parseFloat(a.price) || 0;
+                    const priceB = parseFloat(b.price) || 0;
+                    return priceB - priceA;
+                }
+                if (sort === 'category') return (a.category || '').localeCompare(b.category || '');
+                if (sort === 'stock-medina') {
+                    const availableA = a.availableMedina !== false ? 1 : 0;
+                    const availableB = b.availableMedina !== false ? 1 : 0;
+                    return availableB - availableA;
+                }
+                if (sort === 'stock-rooftop') {
+                    const availableA = a.availableRooftop !== false ? 1 : 0;
+                    const availableB = b.availableRooftop !== false ? 1 : 0;
+                    return availableB - availableA;
+                }
+                return 0;
+            });
+
+            renderTable();
+        };
+
+        // Render standard layout
+        function renderTable() {
+            const tbody = document.getElementById('inventory-table-body');
+            const emptyState = document.getElementById('empty-state');
+            const countBadge = document.getElementById('items-count');
+
+            countBadge.innerText = `${filteredItems.length} Items`;
+
+            if (filteredItems.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            tbody.innerHTML = filteredItems.map(item => {
+                const isGlobalAvail = item.available !== false;
+                const isMedinaAvail = item.availableMedina !== false;
+                const isRooftopAvail = item.availableRooftop !== false;
+
+                const categoryLabels = {
+                    burgers: 'Burgers',
+                    sides: 'Sides',
+                    tapas: 'Tapas',
+                    globe: 'Taste Globe',
+                    desserts: 'Desserts',
+                    drinks: 'Drinks'
+                };
+
+                const escapeHTML = (str) => {
+                    if (!str) return '';
+                    return String(str)
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#39;');
+                };
+
+                return `
+                    <tr class="border-b border-slate-800/40 hover:bg-slate-800/10 transition-all">
+                        <!-- details -->
+                        <td class="py-4 px-6">
+                            <div class="flex items-center gap-3">
+                                ${item.image ? `
+                                    <div class="w-10 h-10 rounded-lg overflow-hidden border border-slate-800">
+                                        <img src="${escapeHTML(item.image)}" class="w-full h-full object-cover">
+                                    </div>
+                                ` : `
+                                    <div class="w-10 h-10 rounded-lg bg-slate-800/50 flex items-center justify-center border border-slate-800">
+                                        <i class="fa-solid fa-utensils text-slate-500 text-sm"></i>
+                                    </div>
+                                `}
+                                <div>
+                                    <div class="font-bold text-white text-sm">${escapeHTML(item.name)}</div>
+                                    <div class="text-xs text-slate-500 max-w-[200px] truncate">${escapeHTML(item.desc) || 'No description'}</div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- category -->
+                        <td class="py-4 px-6 text-sm text-slate-300 font-semibold capitalize">
+                            ${categoryLabels[item.category] || item.category || 'Other'}
+                        </td>
+
+                        <!-- price -->
+                        <td class="py-4 px-6">
+                            <div class="text-sm font-bold text-white">${escapeHTML(item.price) || '0'} DH</div>
+                            ${item.mini ? `<div class="text-xs text-slate-400">Mini: ${escapeHTML(item.mini)} DH</div>` : ''}
+                        </td>
+
+                        <!-- global stock -->
+                        <td class="py-4 px-6 text-center">
+                            <label class="switch">
+                                <input type="checkbox" ${isGlobalAvail ? 'checked' : ''} onchange="toggleStock('${item.id}', 'available', this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+
+                        <!-- medina stock -->
+                        <td class="py-4 px-6 text-center bg-green-500/5">
+                            <label class="switch">
+                                <input type="checkbox" ${isMedinaAvail ? 'checked' : ''} onchange="toggleStock('${item.id}', 'availableMedina', this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+
+                        <!-- rooftop stock -->
+                        <td class="py-4 px-6 text-center bg-purple-500/5">
+                            <label class="switch">
+                                <input type="checkbox" ${isRooftopAvail ? 'checked' : ''} onchange="toggleStock('${item.id}', 'availableRooftop', this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+
+                        <!-- actions -->
+                        <td class="py-4 px-6 text-right">
+                            <div class="flex justify-end gap-3">
+                                <button onclick="openEditModal('${item.id}', '${encodeURIComponent(item.name || '')}', '${item.price || ''}', '${item.mini || ''}', '${item.category || ''}', '${item.location || 'all'}', '${encodeURIComponent(item.desc || '')}')"
+                                    class="text-slate-400 hover:text-white w-8 h-8 rounded-lg flex items-center justify-center bg-slate-800/40 hover:bg-slate-800 border border-slate-800 transition-all">
+                                    <i class="fa-solid fa-pencil text-xs"></i>
+                                </button>
+                                <button onclick="deleteItem('${item.id}', '${encodeURIComponent(item.name || '')}')"
+                                    class="text-slate-500 hover:text-red-500 w-8 h-8 rounded-lg flex items-center justify-center bg-slate-800/20 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Toggle availability fields in Firestore
+        window.toggleStock = async function(id, field, isChecked) {
+            try {
+                const itemRef = doc(db, 'menu', id);
+                await updateDoc(itemRef, {
+                    [field]: isChecked,
+                    updatedAt: new Date().toISOString()
+                });
+                console.log(`Updated item ${id} field ${field} to ${isChecked}`);
+            } catch (error) {
+                console.error("Stock update error:", error);
+                alert("Failed to update stock: " + error.message);
+            }
+        };
+
+        // Add menu item
+        window.handleAddSubmit = async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('add-name').value.trim();
+            const price = parseFloat(document.getElementById('add-price').value);
+            const miniVal = document.getElementById('add-mini').value;
+            const mini = miniVal ? parseFloat(miniVal) : null;
+            const category = document.getElementById('add-category').value;
+            const location = document.getElementById('add-location').value;
+            const desc = document.getElementById('add-desc').value.trim();
+
+            if (!name || isNaN(price)) return;
+
+            try {
+                const newItem = {
+                    name,
+                    price,
+                    mini,
+                    category,
+                    location,
+                    desc,
+                    available: true,
+                    availableMedina: true,
+                    availableRooftop: true,
+                    updatedAt: new Date().toISOString()
+                };
+
+                await addDoc(collection(db, 'menu'), newItem);
+                closeAddModal();
+                document.getElementById('add-form').reset();
+            } catch (error) {
+                console.error("Add item error:", error);
+                alert("Failed to add item: " + error.message);
+            }
+        };
+
+        // Edit menu item
+        window.handleEditSubmit = async function(event) {
+            event.preventDefault();
+            const id = document.getElementById('edit-id').value;
+            const name = document.getElementById('edit-name').value.trim();
+            const price = parseFloat(document.getElementById('edit-price').value);
+            const miniVal = document.getElementById('edit-mini').value;
+            const mini = miniVal ? parseFloat(miniVal) : null;
+            const category = document.getElementById('edit-category').value;
+            const location = document.getElementById('edit-location').value;
+            const desc = document.getElementById('edit-desc').value.trim();
+
+            if (!id || !name || isNaN(price)) return;
+
+            try {
+                const itemRef = doc(db, 'menu', id);
+                await updateDoc(itemRef, {
+                    name,
+                    price,
+                    mini,
+                    category,
+                    location,
+                    desc,
+                    updatedAt: new Date().toISOString()
+                });
+                closeEditModal();
+            } catch (error) {
+                console.error("Edit item error:", error);
+                alert("Failed to save changes: " + error.message);
+            }
+        };
+
+        // Delete menu item
+        window.deleteItem = async function(id, nameEncoded) {
+            const name = decodeURIComponent(nameEncoded);
+            if (confirm(`Are you sure you want to delete "${name}"?`)) {
+                try {
+                    const itemRef = doc(db, 'menu', id);
+                    await deleteDoc(itemRef);
+                    console.log(`Deleted item ${id}`);
+                } catch (error) {
+                    console.error("Delete item error:", error);
+                    alert("Failed to delete item: " + error.message);
+                }
+            }
+        };
+
+        // Modal triggers
+        window.openAddModal = function() {
+            document.getElementById('add-modal').classList.remove('hidden');
+        };
+        window.closeAddModal = function() {
+            document.getElementById('add-modal').classList.add('hidden');
+        };
+
+        window.openEditModal = function(id, name, price, mini, category, location, desc) {
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-name').value = decodeURIComponent(name);
+            document.getElementById('edit-price').value = price;
+            document.getElementById('edit-mini').value = mini === 'null' ? '' : mini;
+            document.getElementById('edit-category').value = category;
+            document.getElementById('edit-location').value = location;
+            document.getElementById('edit-desc').value = decodeURIComponent(desc);
+            document.getElementById('edit-modal').classList.remove('hidden');
+        };
+        window.closeEditModal = function() {
+            document.getElementById('edit-modal').classList.add('hidden');
+        };
+
+        // Search & filter triggers
+        window.handleSearch = function() {
+            applyFiltersAndRender();
+        };
+        window.handleCategoryFilter = function() {
+            applyFiltersAndRender();
+        };
+        window.handleSort = function() {
+            applyFiltersAndRender();
+        };
+
+        // Start
+        startSync();
+    </script>
+</body>
+
+</html>
