@@ -169,20 +169,20 @@
             <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-4">
                 <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-2">Select Date</div>
                 <input type="date" id="pickup-date"
-                    class="w-full rounded-xl border border-slate-200 py-3 px-4 text-slate-800 font-semibold bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full h-[52px] rounded-xl border border-slate-200 px-4 text-slate-800 font-semibold bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none">
             </div>
 
             <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-5">
                 <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-3">Select Time</div>
                 <input type="time" id="pickup-time" onchange="pickCustomTime(this.value)"
-                    class="w-full rounded-xl border border-slate-200 py-3 px-4 text-slate-800 font-semibold bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full h-[52px] rounded-xl border border-slate-200 px-4 text-slate-800 font-semibold bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none">
                 <p id="time-err" class="text-red-500 text-xs font-bold mt-3 hidden">Please select a time.</p>
             </div>
 
             <div class="flex gap-3">
                 <button onclick="showStep(1)"
-                    class="flex-1 bg-slate-200 text-slate-700 font-black py-4 rounded-xl hover:bg-slate-300 transition-all">
-                    <i class="fa-solid fa-arrow-left mr-2"></i>Back
+                    class="flex-1 bg-slate-200 text-slate-700 font-black h-[52px] rounded-xl flex items-center justify-center gap-2 hover:bg-slate-300 transition-all">
+                    <i class="fa-solid fa-arrow-left"></i>Back
                 </button>
                 <button onclick="goToMenu()"
                     class="flex-[2] bg-[#1e3a8a] text-white font-black py-4 rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-blue-900 transition-all">
@@ -224,8 +224,8 @@
 
             <div class="flex gap-3">
                 <button onclick="showStep(2)"
-                    class="flex-1 bg-slate-200 text-slate-700 font-black py-4 rounded-xl hover:bg-slate-300 transition-all">
-                    <i class="fa-solid fa-arrow-left mr-2"></i>Back
+                    class="flex-1 bg-slate-200 text-slate-700 font-black h-[52px] rounded-xl flex items-center justify-center gap-2 hover:bg-slate-300 transition-all">
+                    <i class="fa-solid fa-arrow-left"></i>Back
                 </button>
                 <button onclick="goToConfirm()"
                     class="flex-[2] bg-green-600 text-white font-black py-4 rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-green-700 transition-all">
@@ -293,8 +293,8 @@
 
             <div class="flex gap-3">
                 <button onclick="showStep(3)"
-                    class="flex-1 bg-slate-200 text-slate-700 font-black py-4 rounded-xl hover:bg-slate-300 transition-all">
-                    <i class="fa-solid fa-arrow-left mr-2"></i>Back
+                    class="flex-1 bg-slate-200 text-slate-700 font-black h-[52px] rounded-xl flex items-center justify-center gap-2 hover:bg-slate-300 transition-all">
+                    <i class="fa-solid fa-arrow-left"></i>Back
                 </button>
                 <button onclick="placeOrder()"
                     class="flex-[2] bg-green-600 text-white font-black py-4 rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-green-700 transition-all">
