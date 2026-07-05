@@ -36,17 +36,17 @@
         }
     </style>
 </head>
-<body class="bg-blue-950 text-white min-h-screen flex items-center justify-center overflow-hidden selection:bg-red-500 selection:text-white">
+<body class="bg-blue-950 text-white min-h-screen flex items-center justify-center overflow-x-hidden overflow-y-auto selection:bg-red-500 selection:text-white">
 
     <!-- Background -->
-    <div class="absolute inset-0 z-0">
+    <div class="fixed inset-0 z-0">
         <div class="absolute inset-0 bg-gradient-to-br from-blue-950 via-slate-900 to-blue-900 animate-gradient"></div>
         <div class="absolute inset-0 bg-black/40"></div>
         <img src="img/bakgroundfishburger.png" alt="Background" class="w-full h-full object-cover opacity-30">
     </div>
 
     <!-- Content -->
-    <div class="relative z-10 container mx-auto px-6 max-w-4xl text-center flex flex-col items-center">
+    <div class="relative z-10 container mx-auto px-6 py-12 max-w-4xl text-center flex flex-col items-center">
         
         <!-- Logo Icon -->
         <div class="bg-red-600 text-white w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-lg shadow-red-600/40 mb-8 mx-auto">

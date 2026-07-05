@@ -97,7 +97,7 @@ let menuItems = [
     // SHARED / ALL
     { id: 'default-21', name: "Ice Cream Cookie-Burger", price: 40, category: "desserts", location: "all", available: true, desc: "" },
     { id: 'default-22', name: "Chocolate Chip Cookies", price: 20, category: "desserts", location: "all", available: true, desc: "" },
-    { id: 'default-23', name: "Soda", price: 15, category: "drinks", location: "all", available: true, desc: "" },
+    { id: 'default-23', name: "Soda", price: 20, category: "drinks", location: "all", available: true, desc: "" },
     { id: 'default-casa-13', name: "Ginger Mint Lemonade", price: 15, category: "drinks", location: "casablanca", available: true, desc: "" },
     { id: 'default-casa-14', name: "Espresso", price: 15, category: "drinks", location: "casablanca", available: true, desc: "" },
 ];
@@ -121,8 +121,8 @@ async function loadDataFromFirebase() {
             menuItems = [];
         }
 
-        // NUCLEAR RESET: Force reseed with version v1005 for strict isolation and complete data fix
-        const currentReseedVersion = 'menuReseeded_v1005';
+        // NUCLEAR RESET: Force reseed with version v1006 for strict isolation and complete data fix
+        const currentReseedVersion = 'menuReseeded_v1008';
         const hasReseeded = localStorage.getItem(currentReseedVersion);
 
         if (!hasReseeded || menuItems.length === 0) {
@@ -1350,13 +1350,13 @@ window.toggleLocationAvailability = async function (id, location, isAvailable) {
 async function seedMenu() {
     const seedItems = [
         // ESSAOUIRA BURGERS
-        { name: "Crispy Fish Burger", price: 70, category: "burgers", location: "essaouira", available: true, mini: 55, desc: "Crispy fish filet, lettuce, coleslaw, chipotle, salsa verde, tartar & cornichons", note: "Best Seller - Includes 1 side for free" },
-        { name: "Double Crispy Fish Burger", price: 110, category: "burgers", location: "essaouira", available: true, desc: "2 crispy fish filets, lettuce, coleslaw, chipotle, salsa verde, tartar & cornichons", note: "Includes 1 side for free" },
-        { name: "Sardine Burger", price: 60, category: "burgers", location: "essaouira", available: true, mini: 45, desc: "2 grilled hashed sardine patties, cheese, lettuce, tomatoes & caramelized onions", note: "Signature - Includes 1 side for free" },
-        { name: "Tofu Burger", price: 75, category: "burgers", location: "essaouira", available: true, mini: 60, desc: "Crispy tofu, cheese, lettuce, tomatoes, salsa verde and chipotle sauce", veg: true, note: "Vegetarian - Includes 1 side for free" },
-        { name: "Calamari Burger", price: 75, category: "burgers", location: "essaouira", available: true, mini: 60, desc: "Crispy calamari rings, lettuce, cornichons & tartar", note: "Includes 1 side for free" },
-        { name: "Octopus Burger", price: 75, category: "burgers", location: "essaouira", available: true, mini: 60, desc: "Crispy chopped octopus legs, lettuce, tomatoes, cornichons & salsa verde", note: "Includes 1 side for free" },
-        { name: "Burger of the Month", price: 70, category: "burgers", location: "essaouira", available: true, mini: 55, desc: "Monthly burger inspired by a local artist. Ask your waiter for more details", note: "Limited Edition - Includes 1 side for free" },
+        { name: "Crispy Fish Burger", price: 100, category: "burgers", location: "essaouira", available: true, mini: 80, desc: "Crispy filet of fish, lettuce, coleslaw, chipotle sauce 🌶️, salsa verde, tartar & cornichons", note: "Best Seller - Includes 1 side and 1 drink of your choice" },
+        { name: "Sardine Burger", price: 90, category: "burgers", location: "essaouira", available: true, mini: 70, desc: "2 Grilled sardine in-house patties, cheese, lettuce, tomatoes, tartar, caramelized onions & salsa verde", note: "Signature - Includes 1 side and 1 drink of your choice" },
+        { name: "Spicy Shrimp Burger", price: 110, category: "burgers", location: "essaouira", available: true, mini: 90, desc: "Crispy Shrimp, lettuce, coleslaw, cornichons and chipotle sauce 🌶️", note: "Includes 1 side and 1 drink of your choice" },
+        { name: "Calamari* Burger", price: 110, category: "burgers", location: "essaouira", available: true, mini: 90, desc: "Crispy calamari rings, lettuce, cornichons & tartar", note: "Includes 1 side and 1 drink of your choice" },
+        { name: "Octopus Burger", price: 110, category: "burgers", location: "essaouira", available: true, mini: 90, desc: "Crispy chopped octopus legs, lettuce, tomatoes, cornichons & salsa verde", note: "Includes 1 side and 1 drink of your choice" },
+        { name: "Double Crispy Fish Burger", price: 130, category: "burgers", location: "essaouira", available: true, mini: 110, desc: "2 Crispy fish filets, lettuce, coleslaw, chipotle salsa verde, tartar & cornichons 🌶️", note: "Includes 1 side and 1 drink of your choice" },
+        { name: "Tofu Burger", price: 90, category: "burgers", location: "essaouira", available: true, mini: 70, desc: "Crispy tofu, cheese, lettuce, tomatoes, salsa verde and chipotle sauce 🌶️", veg: true, note: "Vegetarian - Includes 1 side and 1 drink of your choice" },
 
         // CASABLANCA BURGERS
         { name: "Crispy Fishburger", price: 65, category: "burgers", location: "casablanca", available: true, mini: 50, desc: "Crispy white fish filet, chipotle, salsa verde & tartar, lettuce, pickles & coleslaw", note: "Best Seller - Includes 1 side for free" },
@@ -1368,8 +1368,8 @@ async function seedMenu() {
         { name: "Burger of the Month", price: 70, category: "burgers", location: "casablanca", available: true, mini: 50, desc: "Monthly burger inspired by a local artist. Ask your waiter for more details", note: "Limited Edition - Includes 1 side for free" },
 
         // ESSAOUIRA SIDES
-        { name: "Potato Fries", price: 20, category: "sides", location: "essaouira", available: true },
-        { name: "Onion Rings", price: 25, category: "sides", location: "essaouira", available: true },
+        { name: "Potato Wedges", price: 20, category: "sides", location: "essaouira", available: true },
+        { name: "Onion Rings", price: 20, category: "sides", location: "essaouira", available: true },
         { name: "Guacamole", price: 20, category: "sides", location: "essaouira", available: true },
         { name: "Coleslaw", price: 20, category: "sides", location: "essaouira", available: true },
 
@@ -1380,16 +1380,16 @@ async function seedMenu() {
         { name: "Coleslaw", price: 20, category: "sides", location: "casablanca", available: true },
 
         // ESSAOUIRA TAPAS
-        { name: "Summer Salad", price: 35, category: "tapas", location: "essaouira", available: true, desc: "Avocados, lettuce, tomatoes, onions, cucumbers & vinaigrette" },
-        { name: "Fancy Sardines", price: 20, category: "tapas", location: "essaouira", available: true, desc: "3 crispy fresh sardines, stuffed with sharmoula" },
-        { name: "Seafood Basket", price: 60, category: "tapas", location: "essaouira", available: true, desc: "Fried seafood mix & potato chips" },
-        { name: "Nachos", price: 45, category: "tapas", location: "essaouira", available: true, desc: "Golden tortilla chips, guacamole, pico de gallo, chipotle sauce and salsa verde" },
-        { name: "Msemmen Fish Tacos", price: 35, category: "tapas", location: "essaouira", available: true, desc: "2 Moroccan tortilla, crispy white fish, veggies, salsa verde and chipotle sauce" },
-        { name: "Sardine Croquettes", price: 30, category: "tapas", location: "essaouira", available: true, desc: "3 crispy sardine balls, cheese stuffed" },
-        { name: "Calamari Rings", price: 40, category: "tapas", location: "essaouira", available: true, desc: "5 crispy rings & tartar sauce" },
-        { name: "Fish Nuggets", price: 30, category: "tapas", location: "essaouira", available: true, desc: "3 crispy fish nuggets & tartar sauce" },
-        { name: "Mozzarella Sticks", price: 30, category: "tapas", location: "essaouira", available: true, desc: "5 sticks & marinara sauce" },
-        { name: "Fried Octopus", price: 40, category: "tapas", location: "essaouira", available: true, desc: "Crispy octopus slices" },
+        { name: "Summer Salad", price: 45, category: "tapas", location: "essaouira", available: true, desc: "Lettuce, tomatoes, onions, avocados cucumbers & vinaigrette" },
+        { name: "Fancy Sardines", price: 35, category: "tapas", location: "essaouira", available: true, desc: "3 crispy fresh sardines, with sharmoula", note: "Original" },
+        { name: "Seafood Basket", price: 70, category: "tapas", location: "essaouira", available: true, desc: "Fried mixed seafood & potato wedges" },
+        { name: "Nachos", price: 55, category: "tapas", location: "essaouira", available: true, desc: "Golden tortilla chips, guacamole, pico de gallo, chipotle sauce 🌶️, salsa verde" },
+        { name: "Msemmen Fish Tacos", price: 50, category: "tapas", location: "essaouira", available: true, desc: "2 Moroccan tortilla, crispy white fish, veggies, salsa verde and chipotle sauce 🌶️", note: "Original" },
+        { name: "Sardine Croquettes", price: 40, category: "tapas", location: "essaouira", available: true, desc: "3 crispy sardine balls, cheese stuffed", note: "Original" },
+        { name: "Calamari* Rings", price: 50, category: "tapas", location: "essaouira", available: true, desc: "5 crispy rings & tartar sauce" },
+        { name: "Fish Nuggets", price: 35, category: "tapas", location: "essaouira", available: true, desc: "3 crispy fish nuggets & tartar sauce" },
+        { name: "Mozzarella Sticks", price: 45, category: "tapas", location: "essaouira", available: true, desc: "5 sticks & marinara sauce" },
+        { name: "Fried Octopus", price: 55, category: "tapas", location: "essaouira", available: true, desc: "Crispy octopus slices" },
 
         // CASABLANCA TAPAS
         { name: "Summer Salad", price: 35, category: "tapas", location: "casablanca", available: true, desc: "Avocados, lettuce, tomatoes, onions, cucumbers & vinaigrette" },
@@ -1404,25 +1404,36 @@ async function seedMenu() {
         { name: "Fried Octopus", price: 40, category: "tapas", location: "casablanca", available: true, desc: "Crispy octopus slices" },
         { name: "Calamari* Rings", price: 40, category: "tapas", location: "casablanca", available: true, desc: "5 crispy rings & tartar sauce" },
 
-        // CASABLANCA GLOBE (Was missing!)
+        // CASABLANCA GLOBE
         { name: "Fish & Chips", price: 70, category: "globe", location: "casablanca", available: true, desc: "Crispy fish fillets, potato chips, coleslaw & tartar" },
         { name: "Fish Burrito", price: 60, category: "globe", location: "casablanca", available: true, desc: "Crispy white fish, guacamole, rice, lettuce, salsa verde, coleslaw & chipotle sauce" },
         { name: "Po' Boy Sandwich", price: 50, category: "globe", location: "casablanca", available: true, desc: "Crispy white fish, lettuce, tomatoes & tartar" },
         { name: "Calamari Sandwich", price: 50, category: "globe", location: "casablanca", available: true, desc: "Crispy calamari rings, lettuce, cornichons & tartar" },
         { name: "Octopus Sandwich", price: 50, category: "globe", location: "casablanca", available: true, desc: "Marinated octopus, marinara, pico de gallo & chipotle sauce" },
 
+        // ESSAOUIRA GLOBE
+        { name: "Fish & Chips", price: 90, category: "globe", location: "essaouira", available: true, desc: "Crispy fish fillets, potato wedges, coleslaw & tartar" },
+        { name: "Fish Burrito", price: 100, category: "globe", location: "essaouira", available: true, desc: "Crispy white fish, guacamole, rice, lettuce, coleslaw, salsa verde & chipotle sauce 🌶️" },
+        { name: "Po' Boy Sandwich", price: 80, category: "globe", location: "essaouira", available: true, desc: "Crispy white fish, lettuce, tomatoes & tartar" },
+        { name: "Bocadillo de Calamares", price: 80, category: "globe", location: "essaouira", available: true, desc: "Crispy calamari rings, lettuce, tomatoes, onions & tartar" },
+        { name: "Octopus Sandwich", price: 90, category: "globe", location: "essaouira", available: true, desc: "Marinated octopus, marinara, pico de gallo & chipotle sauce 🌶️" },
+        { name: "Spicy Seafood Sandwich", price: 90, category: "globe", location: "essaouira", available: true, desc: "Spicy crevettes, calamari, pico de gallo, cilantro, chipotle sauce 🌶️" },
+
         // SHARED / ALL
         { name: "Cinnabun Crumble Topped Icecream", price: 35, category: "desserts", location: "all", available: true },
         { name: "Ice Cream Cookie-Burger", price: 40, category: "desserts", location: "all", available: true },
         { name: "2 Chocolate Chip Cookies", price: 20, category: "desserts", location: "all", available: true },
-        { name: "Soda", price: 15, category: "drinks", location: "all", available: true },
-        { name: "Sparkling Water", price: 15, category: "drinks", location: "all", available: true },
+        { name: "Soda", price: 20, category: "drinks", location: "all", available: true },
+        { name: "Still Water 33cl", price: 15, category: "drinks", location: "all", available: true },
+        { name: "Still Water 1.5L", price: 30, category: "drinks", location: "all", available: true },
+        { name: "Sparkling Water 33cl", price: 20, category: "drinks", location: "all", available: true },
         { name: "Ginger Mint Lemonade", price: 15, category: "drinks", location: "casablanca", available: true }, // Casablanca price override
-        { name: "Ginger Mint Lemonade ", price: 20, category: "drinks", location: "essaouira", available: true }, // Essaouira price
+        { name: "Ginger Mint Lemonade", price: 20, category: "drinks", location: "essaouira", available: true }, // Essaouira price
         { name: "Espresso", price: 15, category: "drinks", location: "casablanca", available: true }, // Casablanca Price
-        { name: "Espresso ", price: 20, category: "drinks", location: "essaouira", available: true }, // Essaouira Price
+        { name: "Espresso", price: 20, category: "drinks", location: "essaouira", available: true }, // Essaouira Price
         { name: "Americano", price: 20, category: "drinks", location: "all", available: true },
-        { name: "Iced Coffee", price: 25, category: "drinks", location: "all", available: true }
+        { name: "Iced Coffee", price: 25, category: "drinks", location: "all", available: true },
+        { name: "Iced Tea", price: 20, category: "drinks", location: "all", available: true }
     ];
 
     console.log('Seeding menu with branch assignments...');

@@ -163,10 +163,54 @@ const translations = {
     "Our Hidden Gem": { "es": "Nuestra Joya Oculta", "ar": "جوهرتنا الخفية", "fr": "Notre Trésor Caché" },
     "Behind our iconic blue door lies the heart of Essaouira's modern seafood scene.": { "es": "Detrás de nuestra icónica puerta azul se encuentra el corazón de la moderna escena de mariscos de Essaouira.", "ar": "يقع قلب مشهد المأكولات البحرية الحديثة في الصويرة خلف بابنا الأزرق الشهير.", "fr": "Derrière notre emblématique porte bleue se trouve le cœur de la scène moderne des fruits de mer d'Essaouira." },
     "Community Love": { "es": "Amor Comunitario", "ar": "حب المجتمع", "fr": "L'Amour de la Communauté" },
-    "Sharing the joy of fresh seafood against the backdrop of our signature Medina murals.": { "es": "Compartir la alegría de los mariscos frescos con el telón de fondo de nuestros exclusivos murales de la Medina.", "ar": "مشاركة فرحة المأكولات البحرية الطازجة على خلفية اللوحات الجدارية المميزة لمدينتنا.", "fr": "Partager la joie des fruits de mer frais avec en toile de fond nos peintures murales signatures de la Médina." }
+    "Sharing the joy of fresh seafood against the backdrop of our signature Medina murals.": { "es": "Compartir la alegría de los mariscos frescos con el telón de fondo de nuestros exclusivos murales de la Medina.", "ar": "مشاركة فرحة المأكولات البحرية الطازجة على خلفية اللوحات الجدارية المميزة لمدينتنا.", "fr": "Partager la joie des fruits de mer frais avec en toile de fond nos peintures murales signatures de la Médina." },
+    "Spicy Shrimp Burger": { "es": "Hamburguesa de Camarón Picante", "ar": "برجر الجمبري الحار", "fr": "Burger aux Crevettes Épicées" },
+    "Calamari* Burger": { "es": "Hamburguesa de Calamar*", "ar": "برجر الكالاماري*", "fr": "Burger de Calamars*" },
+    "Octopus Burger": { "es": "Hamburguesa de Pulpo", "ar": "برجر الأخطبوط", "fr": "Burger de Poulpe" },
+    "Extra Jalapenos": { "es": "Jalapeños Extra", "ar": "هلابينو إضافي", "fr": "Jalapeños Supplémentaires" },
+    "Extra Guacamole": { "es": "Guacamole Extra", "ar": "غواكامولي إضافي", "fr": "Guacamole Supplémentaire" },
+    "Add on": { "es": "Adicional", "ar": "إضافة", "fr": "Supplément" },
+    "Best Seller - Includes 1 side and 1 drink of your choice": { "es": "Más Vendido - Incluye 1 guarnición y 1 bebida de tu elección", "ar": "الأكثر مبيعاً - يشمل طبق جانبي واحد ومشروب واحد من اختيارك", "fr": "Meilleure Vente - Comprend 1 accompagnement et 1 boisson de votre choix" },
+    "Signature - Includes 1 side and 1 drink of your choice": { "es": "Especialidad - Incluye 1 guarnición y 1 bebida de tu elección", "ar": "الطبق المميز - يشمل طبق جانبي واحد ومشروب واحد من اختيارك", "fr": "Signature - Comprend 1 accompagnement et 1 boisson de votre choix" },
+    "Includes 1 side and 1 drink of your choice": { "es": "Incluye 1 guarnición y 1 bebida de tu elección", "ar": "يشمل طبق جانبي واحد ومشروب واحد من اختيارك", "fr": "Comprend 1 accompagnement et 1 boisson de votre choix" },
+    "Vegetarian - Includes 1 side and 1 drink of your choice": { "es": "Vegetariano - Incluye 1 guarnición y 1 bebida de tu elección", "ar": "نباتي - يشمل طبق جانبي واحد ومشروب واحد من اختيارك", "fr": "Végétarien - Comprend 1 accompagnement et 1 boisson de votre choix" },
+    "Crispy filet of fish, lettuce, coleslaw, chipotle sauce 🌶️, salsa verde, tartar & cornichons": { "es": "Filete de pescado crujiente, lechuga, ensalada de col, salsa chipotle 🌶️, salsa verde, tártara y pepinillos", "ar": "فيليه سمك مقرمش، خس، سلطة كولسلو، صلصة شيبوتل 🌶️، صلصة خضراء، تارتار وكورنيشون", "fr": "Filet de poisson croustillant, laitue, salade de chou, sauce chipotle 🌶️, salsa verde, tartare et cornichons" },
+    "2 Crispy fish filets, lettuce, coleslaw, chipotle salsa verde, tartar & cornichons 🌶️": { "es": "2 Filetes de pescado crujientes, lechuga, ensalada de col, salsa chipotle verde, tártara y pepinillos 🌶️", "ar": "2 فيليه سمك مقرمش، خس، سلطة كولسلو، صلصة شيبوتل خضراء، تارتار وكورنيشون 🌶️", "fr": "2 Filets de poisson croustillants, laitue, salade de chou, sauce chipotle verte, tartare et cornichons 🌶️" },
+    "Crispy Shrimp, lettuce, coleslaw, cornichons and chipotle sauce 🌶️": { "es": "Camarones crujientes, lechuga, ensalada de col, pepinillos y salsa chipotle 🌶️", "ar": "جمبري مقرمش، خس، سلطة كولسلو، كورنيشون وصلصة شيبوتل 🌶️", "fr": "Crevettes croustillantes, laitue, salade de chou, cornichons et sauce chipotle 🌶️" },
+    "Crispy calamari rings, lettuce, cornichons & tartar": { "es": "Anillos de calamar crujientes, lechuga, pepinillos y salsa tártara", "ar": "حلقات الكالاماري المقرمشة، خس، كورنيشون وصلصة تارتار", "fr": "Anneaux de calamars croustillants, laitue, cornichons et tartare" },
+    "Crispy chopped octopus legs, lettuce, tomatoes, cornichons & salsa verde": { "es": "Patas de pulpo troceadas crujientes, lechuga, tomates, pepinillos y salsa verde", "ar": "أرجل أخطبوط مفرومة مقرمشة، خس، طماطم، كورنيشون وصلصة خضراء", "fr": "Pattes de poulpe hachées croustillantes, laitue, tomates, cornichons et salsa verde" },
+    "Crispy tofu, cheese, lettuce, tomatoes, salsa verde and chipotle sauce 🌶️": { "es": "Tofu crujiente, queso, lechuga, tomates, salsa verde y salsa chipotle 🌶️", "ar": "توفو مقرمش، جبن، خس، طماطم، صلصة خضراء وصلصة شيبوتل 🌶️", "fr": "Tofu croustillant, fromage, laitue, tomates, salsa verde et sauce chipotle 🌶️" },
+    "Lettuce, tomatoes, onions, avocados cucumbers & vinaigrette": { "es": "Lechuga, tomates, cebollas, aguacates, pepinos y vinagreta", "ar": "خس، طماطم، بصل، أفوكادو، خيار وصلصة خل", "fr": "Laitue, tomates, oignons, avocats, concombres et vinaigrette" },
+    "3 crispy fresh sardines, with sharmoula": { "es": "3 sardinas frescas crujientes, con sharmoula", "ar": "3 سردين طازج مقرمش، مع الشرمولة", "fr": "3 sardines fraîches croustillantes, avec charmoula" },
+    "Fried mixed seafood & potato wedges": { "es": "Mezcla de mariscos fritos y gajos de papa", "ar": "مزيج مأكولات بحرية مقلية مع جوانح البطاطس", "fr": "Mélange de fruits de mer frits et quartiers de pommes de terre" },
+    "Golden tortilla chips, guacamole, pico de gallo, chipotle sauce 🌶️, salsa verde": { "es": "Chips de tortilla dorados, guacamole, pico de gallo, salsa chipotle 🌶️, salsa verde", "ar": "رقائق تورتيلا ذهبية، غواكامولي، بيكو دي جالو، صلصة شيبوتل 🌶️، صلصة خضراء", "fr": "Croustilles de tortilla dorées, guacamole, pico de gallo, sauce chipotle 🌶️, salsa verde" },
+    "2 Moroccan tortilla, crispy white fish, veggies, salsa verde and chipotle sauce 🌶️": { "es": "2 tortillas marroquíes, pescado blanco crujiente, verduras, salsa verde y salsa chipotle 🌶️", "ar": "2 تورتيلا مغربية، سمك أبيض مقرمش، خضروات، صلصة خضراء وصلصة شيبوتل 🌶️", "fr": "2 tortillas marocaines, poisson blanc croustillant, légumes, salsa verde et sauce chipotle 🌶️" }
 };
 
-function setLanguage(lang) {
+async function setLanguage(lang) {
+    // Initialize i18next if available and not yet initialized
+    if (typeof i18next !== 'undefined') {
+        if (!i18next.isInitialized) {
+            const resources = { en: { translation: {} }, es: { translation: {} }, ar: { translation: {} }, fr: { translation: {} } };
+            for (const [enText, langs] of Object.entries(translations)) {
+                resources.en.translation[enText] = enText;
+                if (langs.es) resources.es.translation[enText] = langs.es;
+                if (langs.ar) resources.ar.translation[enText] = langs.ar;
+                if (langs.fr) resources.fr.translation[enText] = langs.fr;
+            }
+            await i18next.init({
+                lng: lang,
+                fallbackLng: 'en',
+                resources: resources,
+                keySeparator: false,
+                nsSeparator: false,
+                interpolation: { escapeValue: false }
+            });
+        } else {
+            await i18next.changeLanguage(lang);
+        }
+    }
+
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     
@@ -188,7 +232,14 @@ function setLanguage(lang) {
         }
 
         let normalized = node.normalizedText;
-        if (normalized && translations[normalized] && translations[normalized][lang]) {
+        if (typeof i18next !== 'undefined' && i18next.isInitialized && normalized && i18next.exists(normalized)) {
+            const translation = i18next.t(normalized);
+            if (translation !== normalized) {
+                node.nodeValue = node.originalText.replace(node.originalText.trim(), translation);
+                continue;
+            }
+        } else if (normalized && translations[normalized] && translations[normalized][lang]) {
+            // Fallback to original lookup
             const translation = translations[normalized][lang];
             node.nodeValue = node.originalText.replace(node.originalText.trim(), translation);
             continue;
@@ -198,12 +249,20 @@ function setLanguage(lang) {
         let textModified = false;
         
         for (const enText of sortedKeys) {
-            const translatedMap = translations[enText];
-            if (!translatedMap[lang]) continue;
-            
-            if (currentText.includes(enText)) {
-                currentText = currentText.replace(enText, translatedMap[lang]);
-                textModified = true;
+            if (typeof i18next !== 'undefined' && i18next.isInitialized && i18next.exists(enText)) {
+                const translated = i18next.t(enText);
+                if (translated !== enText && currentText.includes(enText)) {
+                    currentText = currentText.replace(enText, translated);
+                    textModified = true;
+                }
+            } else {
+                // Fallback to original lookup
+                const translatedMap = translations[enText];
+                if (!translatedMap[lang]) continue;
+                if (currentText.includes(enText)) {
+                    currentText = currentText.replace(enText, translatedMap[lang]);
+                    textModified = true;
+                }
             }
         }
         

@@ -184,7 +184,7 @@
                 <div id="category-message" class="mb-6 -mt-4">
                     <p class="text-slate-500 text-sm flex items-center gap-2">
                         <i class="fa-solid fa-burger text-orange-500"></i>
-                        Each burger includes one side of your choice
+                        Each burger includes 1 side and 1 drink of your choice
                     </p>
                 </div>
 
@@ -516,8 +516,7 @@
                             id="side-selection-title">
                             Choose Your Free Side
                         </h3>
-                        <p class="text-sm text-slate-500 font-medium mb-6">Every burger comes with a free side. Pick
-                            one!</p>
+                        <p id="side-selection-desc" class="text-sm text-slate-500 font-medium mb-6">Your selection comes with a free side. Pick one!</p>
 
                         <!-- Side Options -->
                         <div id="side-options" class="grid grid-cols-2 gap-3 mb-6">
@@ -525,7 +524,7 @@
                         </div>
 
                         <!-- Cancel Button -->
-                        <button type="button" onclick="closeSideModal()"
+                        <button type="button" id="side-selection-cancel" onclick="closeSideModal()"
                             class="w-full justify-center rounded-xl bg-slate-200 text-slate-700 px-6 py-3 text-sm font-bold hover:bg-slate-300 transition-all active:scale-95 uppercase tracking-widest">
                             Cancel
                         </button>
@@ -654,21 +653,21 @@
                     if (item[branchField] === false) isAvailable = false;
 
                     if (match) {
-                        // Apply overrides from Firestore
-                        if (item.price) match.price = item.price + (item.price.toString().includes('DH') ? '' : ' DH');
-                        if (item.mini) match.mini = item.mini + (item.mini.toString().includes('DH') ? '' : ' DH');
+                        // Apply overrides from Firestore (Availability only, prices rely on menu-data.js)
+                        // if (item.price) match.price = item.price + (item.price.toString().includes('DH') ? '' : ' DH');
+                        // if (item.mini) match.mini = item.mini + (item.mini.toString().includes('DH') ? '' : ' DH');
                         match.soldOut = !isAvailable;
-                    } else if (item.category && menuItems[item.category]) {
-                        // New item found in Firestore that wasn't in local fallback
-                        const newItem = {
-                            ...item,
-                            soldOut: !isAvailable
-                        };
-                        if (newItem.price && !newItem.price.toString().includes('DH')) newItem.price += " DH";
-                        if (newItem.mini && !newItem.mini.toString().includes('DH')) newItem.mini += " DH";
-                        window.applyMenuOverrides(newItem);
-                        menuItems[item.category].push(newItem);
-                        seenNames.add(nameKey);
+                    // } else if (item.category && menuItems[item.category]) {
+                    //     // New item found in Firestore that wasn't in local fallback
+                    //     const newItem = {
+                    //         ...item,
+                    //         soldOut: !isAvailable
+                    //     };
+                    //     if (newItem.price && !newItem.price.toString().includes('DH')) newItem.price += " DH";
+                    //     if (newItem.mini && !newItem.mini.toString().includes('DH')) newItem.mini += " DH";
+                    //     window.applyMenuOverrides(newItem);
+                    //     menuItems[item.category].push(newItem);
+                    //     seenNames.add(nameKey);
                     }
                 });
 
@@ -678,6 +677,7 @@
                     "Crispy Fish Burger",
                     "Double Crispy Fishburger",
                     "Double Crispy Fish Burger",
+                    "Spicy Shrimp Burger",
                     "Sardine Burger",
                     "Eggplant Burger",
                     "Tofu Burger",
@@ -722,17 +722,19 @@
 
                 const tapasOrder = [
                     "Summer Salad",
-                    "Msemmen Fish Tacos",
                     "Fancy Sardines",
-                    "Sardine Croquettes",
-                    "Aubergine Crunchies",
                     "Seafood Basket",
-                    "Calamari* Rings",
-                    "Calamari Rings",
                     "Nachos",
+                    "Msemmen Fish Tacos",
+                    "Sardine Croquettes",
+                    "Calamari* Rings",
                     "Fish Nuggets",
                     "Mozzarella Sticks",
-                    "Fried Octopus"
+                    "Fried Octopus",
+                    "Extra Jalapenos",
+                    "Extra Guacamole",
+                    "Aubergine Crunchies",
+                    "Calamari Rings"
                 ];
 
                 if (menuItems.tapas) {
@@ -893,6 +895,7 @@
                 menuGrid.appendChild(el);
                 setTimeout(() => el.classList.add('fade-enter-active'), index * 50);
             });
+
         }
 
         // Track pending burger for side selection
@@ -959,61 +962,102 @@
             { name: "Coleslaw", icon: "fa-bowl-rice" }
         ];
 
-        // Check if item is a burger (includes "Burger" in name or is from burgers category)
+        // Check if item is a burger
         function isBurgerItem(name) {
-            const burgerNames = menuItems.burgers.map(b => b.name.toLowerCase());
+            const burgerNames = (menuItems.burgers || []).map(b => b.name.toLowerCase());
             const itemNameLower = name.toLowerCase().replace(' (mini)', '');
             return burgerNames.some(b => itemNameLower.includes(b.toLowerCase()) || b.includes(itemNameLower)) || name.toLowerCase().includes('burger');
+        }
+
+        // Check if item is a tapas
+        function isTapasItem(name) {
+            const tapasNames = (menuItems.tapas || []).map(t => t.name.toLowerCase());
+            const itemNameLower = name.toLowerCase().replace(' (mini)', '');
+            return tapasNames.some(t => itemNameLower.includes(t.toLowerCase()) || t.includes(itemNameLower));
         }
 
         window.addToCart = function (name, priceStr) {
             let price = parseInt(priceStr.replace(/[^0-9]/g, ''));
             if (isNaN(price)) price = 0;
 
-            // Check if this is a burger item - show side selection
-            if (isBurgerItem(name)) {
+            const isBurger = isBurgerItem(name);
+            const isTapas = isTapasItem(name);
+
+            if (isBurger) {
                 pendingBurger = { name, price, priceStr };
-                showSideSelectionModal();
+                showSideSelectionModal('burger');
+            } else if (isTapas) {
+                pendingBurger = { name, price, priceStr };
+                showSideSelectionModal('tapas');
             } else {
                 cart.push({ name, price, priceStr });
                 updateCartUI();
             }
         };
 
-        function showSideSelectionModal() {
-            // Populate side options
+        function showSideSelectionModal(type) {
             sideOptionsContainer.innerHTML = '';
-            availableSides.forEach(side => {
-                const btn = document.createElement('button');
-                btn.className = 'flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:border-orange-500 hover:bg-orange-50 transition-all active:scale-95 group';
-
-                let iconHtml = '';
-                if (side.icon.startsWith('<svg')) {
-                    iconHtml = side.icon;
-                } else {
-                    iconHtml = `<i class="fa-solid ${side.icon} text-2xl text-slate-400 group-hover:text-orange-500 transition-colors"></i>`;
-                }
-
-                btn.innerHTML = `
-                    ${iconHtml}
-                    <span class="text-sm font-bold text-slate-700 group-hover:text-orange-700">${side.name}</span>
-                    <span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">FREE</span>
-                `;
-                btn.onclick = () => selectSide(side.name);
-                sideOptionsContainer.appendChild(btn);
-            });
+            
+            if (type === 'burger') {
+                document.getElementById('side-selection-title').innerText = 'Choose Your Free Side';
+                document.getElementById('side-selection-desc').innerText = 'Your selection comes with a free side. Pick one!';
+                
+                availableSides.forEach(side => {
+                    const btn = document.createElement('button');
+                    btn.className = 'flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:border-orange-500 hover:bg-orange-50 transition-all active:scale-95 group';
+                    let iconHtml = side.icon.startsWith('<svg') ? side.icon : `<i class="fa-solid ${side.icon} text-2xl text-slate-400 group-hover:text-orange-500 transition-colors"></i>`;
+                    btn.innerHTML = `
+                        ${iconHtml}
+                        <span class="text-sm font-bold text-slate-700 group-hover:text-orange-700">${side.name}</span>
+                        <span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">FREE</span>
+                    `;
+                    btn.onclick = () => selectSide(side.name, 0, true);
+                    sideOptionsContainer.appendChild(btn);
+                });
+                
+                document.getElementById('side-selection-cancel').innerText = 'Cancel';
+                document.getElementById('side-selection-cancel').onclick = closeSideModal;
+            } else if (type === 'tapas') {
+                document.getElementById('side-selection-title').innerText = 'Add Extras?';
+                document.getElementById('side-selection-desc').innerText = 'Enhance your tapas with some extra flavor!';
+                
+                const tapasAddons = [
+                    { name: 'Extra Jalapenos', price: 5, icon: 'fa-pepper-hot' },
+                    { name: 'Extra Guacamole', price: 10, icon: 'fa-seedling' }
+                ];
+                
+                tapasAddons.forEach(addon => {
+                    const btn = document.createElement('button');
+                    btn.className = 'flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 hover:border-orange-500 hover:bg-orange-50 transition-all active:scale-95 group';
+                    btn.innerHTML = `
+                        <i class="fa-solid ${addon.icon} text-2xl text-slate-400 group-hover:text-orange-500 transition-colors"></i>
+                        <span class="text-sm font-bold text-slate-700 group-hover:text-orange-700">${addon.name}</span>
+                        <span class="text-xs font-semibold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full">+${addon.price} DH</span>
+                    `;
+                    btn.onclick = () => selectSide(addon.name, addon.price, false);
+                    sideOptionsContainer.appendChild(btn);
+                });
+                
+                document.getElementById('side-selection-cancel').innerText = 'No Thanks';
+                document.getElementById('side-selection-cancel').onclick = () => {
+                    if (pendingBurger) {
+                        cart.push(pendingBurger);
+                        pendingBurger = null;
+                        updateCartUI();
+                    }
+                    closeSideModal();
+                };
+            }
             sideSelectionModal.classList.remove('hidden');
         }
 
-        window.selectSide = function (sideName) {
+        window.selectSide = function (sideName, sidePrice = 0, isFree = true) {
             if (pendingBurger) {
-                // Add the burger to cart
                 cart.push(pendingBurger);
-                // Add the free side to cart
                 cart.push({
-                    name: sideName + " (Free with " + pendingBurger.name + ")",
-                    price: 0,
-                    priceStr: "FREE"
+                    name: isFree ? sideName + " (Free with " + pendingBurger.name + ")" : sideName,
+                    price: sidePrice,
+                    priceStr: isFree ? "FREE" : sidePrice + " DH"
                 });
                 pendingBurger = null;
                 updateCartUI();
